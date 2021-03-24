@@ -15,20 +15,26 @@
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintBottom_toTopOf="@id/navi"
        app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"/>
-    <fragment
-        android:id="@+id/navi_host"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/navi_graph"/>
+       app:layout_constraintEnd_toEndOf="parent">
+
+       <androidx.fragment.app.FragmentContainerView
+           android:id="@+id/navi_host"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:name="androidx.navigation.fragment.NavHostFragment"
+           app:defaultNavHost="true"
+           app:navGraph="@navigation/navi_graph"/>
+   </FrameLayout>
+
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navi"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="#FFFFFF"
+        app:itemTextColor="@drawable/navigation_icon_color"
+        app:itemIconTint="@drawable/navigation_icon_color"
         app:menu="@menu/navigationmenu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
