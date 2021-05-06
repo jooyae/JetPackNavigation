@@ -23,25 +23,13 @@ class MenuFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_menu, container, false)
     }
 
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
     }
 
-    private fun initMenuFragmentSignUp() {
-        binding.buttonSignup.setOnClickListener {
-            val signupName = binding.editextSignupName.text
-            val signupID = binding.editextSignupId.text
-            val signupPwd = binding.editextSignupPwd.text
 
-            if (signupID.isNullOrBlank() || signupName.isNullOrBlank() || signupPwd.isNullOrBlank()) {
-                Toast.makeText(context, "빈칸이 있는지 확인해주세요.", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "회원님의 정보가 저장되었습니다.", Toast.LENGTH_SHORT).show()
-
-            }
-        }
-
-    }
 
 }
 
