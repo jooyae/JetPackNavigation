@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.juyaeapplication.KakaoAPI
-import com.example.juyaeapplication.R
-import com.example.juyaeapplication.SearchPlaceData
+import com.example.juyaeapplication.*
 import com.example.juyaeapplication.databinding.FragmentHomeBinding
+import net.daum.mf.map.api.MapPOIItem
+import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +22,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private val listItems = arrayListOf<ListLayout>()
+    private val listAdapter = ListAdapter(listItems)
+    private var keyword = ""
+    private lateinit var mapView: MapView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +39,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchKeyword("은행")
+
+        mapView = MapView(requireActivity())
+        val mapViewContainer = binding.mapviewSearchPlace
+        mapViewContainer.addView(mapView)
+
+        binding.recyclerviewSearchPlace.adapter = listAdapter
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5514579595, 126.951949155),true)
+
+        searchPlace()
+
     }
 
     private fun searchKeyword(keyword : String){
@@ -49,8 +64,9 @@ class HomeFragment : Fragment() {
                 call: Call<SearchPlaceData>,
                 response: Response<SearchPlaceData>
             ) {
-                Log.d("Test","Raw: ${response.raw()}")
-                Log.d("Test","Body : ${response.body()}")
+                if (response.isSuccessful) {
+                    addItemsAndMarkers(response.body())
+                }
             }
 
             override fun onFailure(call: Call<SearchPlaceData>, t: Throwable) {
@@ -59,6 +75,43 @@ class HomeFragment : Fragment() {
 
 
         })
+    }
+
+    private fun searchPlace(){
+        binding.buttonSearchPlace.setOnClickListener {
+            keyword = binding.edittextSearchPlace.text.toString()
+            searchKeyword(keyword)
+
+        }
+    }
+    private fun addItemsAndMarkers(searchResult: SearchPlaceData?){
+        if(!searchResult?.documents.isNullOrEmpty()){
+            listItems.clear()
+            mapView.removeAllPOIItems()
+
+
+            for(document in searchResult!!.documents){
+                val item = ListLayout(
+                    document.address_name,
+                    document.category_group_name,
+                    document.category_name,
+                    document.place_name
+                )
+                listItems.add(item)
+
+                val point = MapPOIItem()
+                point.apply {
+                    itemName = document.place_name
+                    mapPoint = MapPoint.mapPointWithGeoCoord(document.y.toDouble(),
+                    document.x.toDouble())
+                    markerType = MapPOIItem.MarkerType.YellowPin
+                    selectedMarkerType = MapPOIItem.MarkerType.RedPin
+                }
+                mapView.addPOIItem(point)
+            }
+            listAdapter.notifyDataSetChanged()
+        }
+
     }
 
     companion object {

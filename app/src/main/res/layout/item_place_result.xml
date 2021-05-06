@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_place"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/textview_address_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="서울 중구 을지로 1가 101-1"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textview_category_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="은행"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/textview_address_name"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/textview_category_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="금융, 보험"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/textview_category_group"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/textview_place_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="하나은행 본점"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/hyperlink"
+        app:layout_constraintTop_toBottomOf="@id/textview_category_name"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
