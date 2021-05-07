@@ -40,12 +40,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mapView = MapView(requireActivity())
-        val mapViewContainer = binding.mapviewSearchPlace
+        mapView = MapView(activity)
+        val mapViewContainer = binding.mapview
         mapViewContainer.addView(mapView)
-
         binding.recyclerviewSearchPlace.adapter = listAdapter
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5514579595, 126.951949155),true)
 
         searchPlace()
 

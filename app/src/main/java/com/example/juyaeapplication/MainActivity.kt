@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initNavigation()
-        getHashKey()
+        getAppKeyHash()
     }
 
     private fun initNavigation() {
@@ -31,20 +31,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun getHashKey() {
-        var packageInfo: PackageInfo = PackageInfo()
+    fun getAppKeyHash() {
         try {
-            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-        for (signature: Signature in packageInfo.signatures) {
-            try {
-                var md: MessageDigest = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                Log.e("KEY_HASH", Base64.encodeToString(md.digest(), Base64.DEFAULT))
-            } catch (e: NoSuchAlgorithmException) {
-                Log.e("KEY_HASH", "Unable to get MessageDigest.signature = " + signature, e)
+            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+            for(i in info.signatures) {
+                val md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(i.toByteArray())
+
+                val something = String(Base64.encode(md.digest(), 0)!!)
+                Log.e("Debug key", something)
             }
-        }}
+        } catch(e: Exception) {
+            Log.e("Not found", e.toString())
+        }
+    }
 }
