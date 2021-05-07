@@ -7,28 +7,62 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.juyaeapplication.AdvertisementAdapter
+import com.example.juyaeapplication.AdvertisementData
 import com.example.juyaeapplication.R
+import com.example.juyaeapplication.databinding.FragmentHomeBinding
 import com.example.juyaeapplication.databinding.FragmentMenuBinding
 
 
 class MenuFragment : Fragment() {
 
     lateinit var binding: FragmentMenuBinding
+    private lateinit var advertisementAdapter : AdvertisementAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false)
+        binding = FragmentMenuBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        advertisementAdapter = AdvertisementAdapter()
+        binding.recyclerviewAdvertisement.adapter = advertisementAdapter
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+        binding.recyclerviewAdvertisement.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+
+        advertisementAdapter.advertisementList.addAll(
+            listOf<AdvertisementData>(
+                AdvertisementData(
+                    advertisement_image = R.drawable.jtbc,
+                    advertisement_title = "JTBC NEWS",
+                    advertisement_subtitle = "2017.01.23"
+                ),
+                AdvertisementData(
+                    advertisement_image = R.drawable.sbs,
+                    advertisement_title = "SBS NEWS",
+                    advertisement_subtitle = "2020.03.14"
+                ),
+                AdvertisementData(
+                    advertisement_image = R.drawable.sports,
+                    advertisement_title = "Sports Seoul",
+                    advertisement_subtitle = "2021.12.25"
+                ),
+                AdvertisementData(
+                    advertisement_image = R.drawable.ytn,
+                    advertisement_title = "YTN",
+                    advertisement_subtitle = "2020.07.02"
+                )
+            )
+
+        )
+        advertisementAdapter.notifyDataSetChanged()
     }
-
 
 
 }

@@ -40,9 +40,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mapView = MapView(activity)
-        val mapViewContainer = binding.mapview
-        mapViewContainer.addView(mapView)
+//        mapView = MapView(activity)
+//        val mapViewContainer = binding.mapview
+//        mapViewContainer.addView(mapView)
         binding.recyclerviewSearchPlace.adapter = listAdapter
 
         searchPlace()
